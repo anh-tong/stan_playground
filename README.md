@@ -62,6 +62,9 @@ Kfu * cholesky_solve(Luu, u - phi_z * eta_omega);
 ```
 which is the second component in the sum of Equation (13) in the paper.
 
+There are still some problems in the way of implementing _sparse_ Gaussian process. For example,
+the inducing points are learned from variational inference (or optimization). The question is that: can we learning this with sampling
+techniques in Stan?
 
 
 
