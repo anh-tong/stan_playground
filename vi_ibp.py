@@ -8,7 +8,7 @@ EPS = 1e-6
 
 class IBP(nn.Module):
 
-    def __init__(self, n_objects, n_features, alpha=1., temperature=0.01):
+    def __init__(self, n_objects, n_features, alpha=1., temperature= 0.1):
 
         super().__init__()
         self.n_objects = n_objects
@@ -144,7 +144,7 @@ class LinearModel(nn.Module):
 
     def likelihood(self, X, sigma2):
         X_hat = self.forward()
-        return -0.5 * torch.square(X_hat - X).sum() / (self.N * self.D * sigma2) # - self.kl_divergence()
+        return -0.5 * torch.square(X_hat - X).sum() / (self.N * self.D * sigma2) - self.kl_divergence()
 
     def kl_divergence(self):
         kl = self.Z_module.kl_divergence() + self.A_module.kl_divergence() + self.c_module.kl_divergence()
@@ -167,7 +167,7 @@ sigma2 = 0.01
 
 model = LinearModel(N=N, D=D, K=K)
 
-optimizer = torch.optim.Adam(params=list(model.parameters()), lr=0.01)
+optimizer = torch.optim.Adam(params=list(model.parameters()), lr=0.001)
 
 for i in range(10000):
     # optimizer.zero_grad()
